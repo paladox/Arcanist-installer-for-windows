@@ -1,5 +1,0 @@
-<?php
-class X {}
-namespace X;
-~~~~~~~~~~
-error:2:1

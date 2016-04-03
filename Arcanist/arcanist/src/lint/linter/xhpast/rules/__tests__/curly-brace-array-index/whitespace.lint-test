@@ -1,7 +1,0 @@
-<?php
-$x { 'key' /* comment */ };
-~~~~~~~~~~
-warning:2:1
-~~~~~~~~~~
-<?php
-$x [ 'key' /* comment */ ];
