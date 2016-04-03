@@ -7,7 +7,7 @@ Help make installer better
 
 To help with making the install better by making an installer please download from http://www.jrsoftware.org/isdl.php and select QuickStart Pack please.
 
-Then just download the files from here and open up the .iss file in the inno setup script studio.
+Then just download the files from here and do git submodule git submodule update --init and then open up the .iss file in the inno setup script studio.
 
 TODO
 ====
