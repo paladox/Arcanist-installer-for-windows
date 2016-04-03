@@ -1,0 +1,6 @@
+{
+  "phabricator.uri": "https://secure.phabricator.com/",
+  "load": [
+    "src/"
+  ]
+}
