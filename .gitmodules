@@ -1,6 +1,6 @@
 [submodule "Arcanist/arcanist"]
 	path = Arcanist/arcanist
-	url = https://secure.phabricator.com/diffusion/ARC/arcanist.git
+	url = https://github.com/paladox/arcanist.git
 	branch = .
 [submodule "Arcanist/libphutil"]
 	path = Arcanist/libphutil
