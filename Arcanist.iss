@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Arcanist"
-#define MyAppVersion "1.0.2"
+#define MyAppVersion "1.1.0"
 #define MyAppPublisher "By a user"
 #define MyAppURL "https://secure.phabricator.com/book/phabricator/article/arcanist_quick_start/"
 
@@ -27,16 +27,29 @@ SolidCompression=yes
 ChangesEnvironment=yes
 ArchitecturesInstallIn64BitMode=x64
 
+[Types]
+Name: "full"; Description: "Full installation"
+Name: "custom"; Description: "Custom installation"; Flags: iscustom
+
+[Components]
+Name: "program"; Description: "Program Files"; Types: full custom; Flags: fixed
+Name: "php_x64"; Description: "PHP 7.0.5 x64 files"; Types: custom; Check: IsWin64
+Name: "php_x86"; Description: "PHP 7.0.5 x86 files"; Types: custom; Check: "not IsWin64"
+
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
-Source: "Arcanist\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "Arcanist\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: program
+Source: "php\x64\*"; DestDir: "{app}\php\x64"; Flags: ignoreversion recursesubdirs createallsubdirs; Check: IsWin64; Components: php_x64
+Source: "php\x86\*"; DestDir: "{app}\php\x86"; Flags: ignoreversion recursesubdirs createallsubdirs; Check: "not IsWin64"; Components: php_x86
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]
 ; set PATH
 Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType:string; ValueName:"Path"; ValueData:"{olddata};{app}\arcanist\bin"
+Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType:string; ValueName:"Path"; ValueData:"{olddata};{app}\php\x64"
+Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType:string; ValueName:"Path"; ValueData:"{olddata};{app}\php\x86"
 
 [Code]
 
@@ -83,5 +96,91 @@ begin
   if CurUninstallStep = usUninstall then
   begin
     RemovePath(ExpandConstant('{app}\arcanist\bin'));
+  end;
+end;
+
+procedure RemovePath_PHP_x64(Path: string);
+var
+  Paths: string;
+  P: Integer;
+begin
+  if not RegQueryStringValue(HKEY_LOCAL_MACHINE, EnvironmentKey, 'Path', Paths) then
+  begin
+    Log('PATH not found');
+  end
+    else
+  begin
+    Log(Format('PATH is [%s]', [Paths]));
+
+    P := Pos(';' + Uppercase(Path) + ';', ';' + Uppercase(Paths) + ';');
+    if P = 0 then
+    begin
+      Log(Format('Path [%s] not found in PATH', [Path]));
+    end
+      else
+    begin
+      Delete(Paths, P - 1, Length(Path) + 1);
+      Log(Format('Path [%s] removed from PATH => [%s]', [Path, Paths]));
+
+      if RegWriteStringValue(HKEY_LOCAL_MACHINE, EnvironmentKey, 'Path', Paths) then
+      begin
+        Log('PATH written');
+      end
+        else
+      begin
+        Log('Error writing PATH');
+      end;
+    end;
+  end;
+end;
+
+procedure CurUninstallStepChanged_PHP_x64(CurUninstallStep: TUninstallStep);
+begin
+  if CurUninstallStep = usUninstall then
+  begin
+    RemovePath_PHP_x64(ExpandConstant('{app}\php\x64'));
+  end;
+end;
+
+procedure RemovePath_PHP_x86(Path: string);
+var
+  Paths: string;
+  P: Integer;
+begin
+  if not RegQueryStringValue(HKEY_LOCAL_MACHINE, EnvironmentKey, 'Path', Paths) then
+  begin
+    Log('PATH not found');
+  end
+    else
+  begin
+    Log(Format('PATH is [%s]', [Paths]));
+
+    P := Pos(';' + Uppercase(Path) + ';', ';' + Uppercase(Paths) + ';');
+    if P = 0 then
+    begin
+      Log(Format('Path [%s] not found in PATH', [Path]));
+    end
+      else
+    begin
+      Delete(Paths, P - 1, Length(Path) + 1);
+      Log(Format('Path [%s] removed from PATH => [%s]', [Path, Paths]));
+
+      if RegWriteStringValue(HKEY_LOCAL_MACHINE, EnvironmentKey, 'Path', Paths) then
+      begin
+        Log('PATH written');
+      end
+        else
+      begin
+        Log('Error writing PATH');
+      end;
+    end;
+  end;
+end;
+
+procedure CurUninstallStepChanged_PHP_x86(CurUninstallStep: TUninstallStep);
+begin
+  if CurUninstallStep = usUninstall then
+  begin
+    RemovePath_PHP_x86(ExpandConstant('{app}\php\x86'));
   end;
 end;
