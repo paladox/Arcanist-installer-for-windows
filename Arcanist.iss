@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Arcanist"
-#define MyAppVersion "1.1.0"
+#define MyAppVersion "1.1.1"
 #define MyAppPublisher "By a user"
 #define MyAppURL "https://secure.phabricator.com/book/phabricator/article/arcanist_quick_start/"
 
@@ -48,8 +48,8 @@ Source: "php\x86\*"; DestDir: "{app}\php\x86"; Flags: ignoreversion recursesubdi
 [Registry]
 ; set PATH
 Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType:string; ValueName:"Path"; ValueData:"{olddata};{app}\arcanist\bin"
-Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType:string; ValueName:"Path"; ValueData:"{olddata};{app}\php\x64"
-Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType:string; ValueName:"Path"; ValueData:"{olddata};{app}\php\x86"
+Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType:string; ValueName:"Path"; ValueData:"{olddata};{app}\php\x64"; Check: IsWin64; Components: php_x64
+Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType:string; ValueName:"Path"; ValueData:"{olddata};{app}\php\x86"; Check: "not IsWin64"; Components: php_x86
 
 [Code]
 
@@ -96,91 +96,8 @@ begin
   if CurUninstallStep = usUninstall then
   begin
     RemovePath(ExpandConstant('{app}\arcanist\bin'));
+    RemovePath(ExpandConstant('{app}\php\x64'));
+    RemovePath(ExpandConstant('{app}\php\x86'));
   end;
 end;
 
-procedure RemovePath_PHP_x64(Path: string);
-var
-  Paths: string;
-  P: Integer;
-begin
-  if not RegQueryStringValue(HKEY_LOCAL_MACHINE, EnvironmentKey, 'Path', Paths) then
-  begin
-    Log('PATH not found');
-  end
-    else
-  begin
-    Log(Format('PATH is [%s]', [Paths]));
-
-    P := Pos(';' + Uppercase(Path) + ';', ';' + Uppercase(Paths) + ';');
-    if P = 0 then
-    begin
-      Log(Format('Path [%s] not found in PATH', [Path]));
-    end
-      else
-    begin
-      Delete(Paths, P - 1, Length(Path) + 1);
-      Log(Format('Path [%s] removed from PATH => [%s]', [Path, Paths]));
-
-      if RegWriteStringValue(HKEY_LOCAL_MACHINE, EnvironmentKey, 'Path', Paths) then
-      begin
-        Log('PATH written');
-      end
-        else
-      begin
-        Log('Error writing PATH');
-      end;
-    end;
-  end;
-end;
-
-procedure CurUninstallStepChanged_PHP_x64(CurUninstallStep: TUninstallStep);
-begin
-  if CurUninstallStep = usUninstall then
-  begin
-    RemovePath_PHP_x64(ExpandConstant('{app}\php\x64'));
-  end;
-end;
-
-procedure RemovePath_PHP_x86(Path: string);
-var
-  Paths: string;
-  P: Integer;
-begin
-  if not RegQueryStringValue(HKEY_LOCAL_MACHINE, EnvironmentKey, 'Path', Paths) then
-  begin
-    Log('PATH not found');
-  end
-    else
-  begin
-    Log(Format('PATH is [%s]', [Paths]));
-
-    P := Pos(';' + Uppercase(Path) + ';', ';' + Uppercase(Paths) + ';');
-    if P = 0 then
-    begin
-      Log(Format('Path [%s] not found in PATH', [Path]));
-    end
-      else
-    begin
-      Delete(Paths, P - 1, Length(Path) + 1);
-      Log(Format('Path [%s] removed from PATH => [%s]', [Path, Paths]));
-
-      if RegWriteStringValue(HKEY_LOCAL_MACHINE, EnvironmentKey, 'Path', Paths) then
-      begin
-        Log('PATH written');
-      end
-        else
-      begin
-        Log('Error writing PATH');
-      end;
-    end;
-  end;
-end;
-
-procedure CurUninstallStepChanged_PHP_x86(CurUninstallStep: TUninstallStep);
-begin
-  if CurUninstallStep = usUninstall then
-  begin
-    RemovePath_PHP_x86(ExpandConstant('{app}\php\x86'));
-  end;
-end;
