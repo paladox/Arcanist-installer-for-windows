@@ -1,8 +1,6 @@
 [submodule "Arcanist/arcanist"]
 	path = Arcanist/arcanist
-	url = https://github.com/paladox/arcanist.git
-	branch = .
+	url = https://gerrit.wikimedia.org/r/phabricator/arcanist
 [submodule "Arcanist/libphutil"]
 	path = Arcanist/libphutil
-	url = https://secure.phabricator.com/diffusion/PHU/libphutil.git
-	branch = .
+	url = https://gerrit.wikimedia.org/r/phabricator/libphutil
