@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Arcanist"
-#define MyAppVersion "1.1.1"
+#define MyAppVersion "1.1.2"
 #define MyAppPublisher "By a user"
 #define MyAppURL "https://secure.phabricator.com/book/phabricator/article/arcanist_quick_start/"
 
@@ -43,7 +43,15 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Source: "Arcanist\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: program
 Source: "php\x64\*"; DestDir: "{app}\php\x64"; Flags: ignoreversion recursesubdirs createallsubdirs; Check: IsWin64; Components: php_x64
 Source: "php\x86\*"; DestDir: "{app}\php\x86"; Flags: ignoreversion recursesubdirs createallsubdirs; Check: "not IsWin64"; Components: php_x86
+Source: "vc_2015\vc_redist.x64.exe"; DestDir: {tmp}; Flags: deleteafterinstall; Check: IsWin64; Components: php_x64
+Source: "vc_2015\vc_redist.x86.exe"; DestDir: {tmp}; Flags: deleteafterinstall; Check: not IsWin64; Components: php_x86
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
+
+[Run]
+; add the Parameters, WorkingDir and StatusMsg as you wish, just keep here
+; the conditional installation Check
+Filename: "{tmp}\vc_redist.x64.exe"; Check: IsWin64 and not VCinstalled; Components: php_x64
+Filename: "{tmp}\vc_redist.x86.exe"; Check: not IsWin64 and not VCinstalled; Components: php_x86
 
 [Registry]
 ; set PATH
@@ -101,3 +109,36 @@ begin
   end;
 end;
 
+function VCinstalled: Boolean;
+ // By Michael Weiner <mailto:spam@cogit.net>
+ // Function for Inno Setup Compiler
+ // 13 November 2015
+ // Returns True if Microsoft Visual C++ Redistributable is installed, otherwise False.
+ // The programmer may set the year of redistributable to find; see below.
+ var
+  names: TArrayOfString;
+  i: Integer;
+  dName, key, year: String;
+ begin
+  // Year of redistributable to find; leave null to find installation for any year.
+  year := '';
+  Result := False;
+  key := 'Software\Microsoft\Windows\CurrentVersion\Uninstall';
+  // Get an array of all of the uninstall subkey names.
+  if RegGetSubkeyNames(HKEY_LOCAL_MACHINE, key, names) then
+   // Uninstall subkey names were found.
+   begin
+    i := 0
+    while ((i < GetArrayLength(names)) and (Result = False)) do
+     // The loop will end as soon as one instance of a Visual C++ redistributable is found.
+     begin
+      // For each uninstall subkey, look for a DisplayName value.
+      // If not found, then the subkey name will be used instead.
+      if not RegQueryStringValue(HKEY_LOCAL_MACHINE, key + '\' + names[i], 'DisplayName', dName) then
+       dName := names[i];
+      // See if the value contains both of the strings below.
+      Result := (Pos(Trim('Visual C++ ' + year),dName) * Pos('Redistributable',dName) <> 0)
+      i := i + 1;
+     end;
+   end;
+ end;
