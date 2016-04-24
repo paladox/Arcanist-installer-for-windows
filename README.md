@@ -4,7 +4,7 @@ This is a windows installer to install Arcanist for windows
 Configuring your editor
 ======
 
-To congiure your editor that arcanist will use for things like arc diff please follow the instructions at https://secure.phabricator.com/book/phabricator/article/arcanist_windows/#configuring-an-editor
+To configure your editor that arcanist will use for things like arc diff please follow the instructions at https://secure.phabricator.com/book/phabricator/article/arcanist_windows/#configuring-an-editor
 
 Help make installer better
 ======
