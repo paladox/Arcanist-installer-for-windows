@@ -1,8 +1,8 @@
 [submodule "Arcanist/arcanist"]
 	path = Arcanist/arcanist
 	url = https://gerrit.wikimedia.org/r/phabricator/arcanist
-	branch = stable
+	branch = wmf/stable
 [submodule "Arcanist/libphutil"]
 	path = Arcanist/libphutil
 	url = https://gerrit.wikimedia.org/r/phabricator/libphutil
-	branch = stable
+	branch = wmf/stable
