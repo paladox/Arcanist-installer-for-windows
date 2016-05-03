@@ -33,8 +33,8 @@ Name: "custom"; Description: "Custom installation"; Flags: iscustom
 
 [Components]
 Name: "program"; Description: "Program Files"; Types: full custom; Flags: fixed
-Name: "php_x64"; Description: "PHP 7.0.5 x64 files"; Types: custom; Check: IsWin64
-Name: "php_x86"; Description: "PHP 7.0.5 x86 files"; Types: custom; Check: "not IsWin64"
+Name: "php_x64"; Description: "PHP 7.0.6 x64 files"; Types: custom; Check: IsWin64
+Name: "php_x86"; Description: "PHP 7.0.6 x86 files"; Types: custom; Check: "not IsWin64"
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
