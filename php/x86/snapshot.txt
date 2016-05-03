@@ -1,7 +1,7 @@
 This snapshot was automatically generated on
-Wed, 30 Mar 2016 18:01:04 +0000
+Thu, 28 Apr 2016 21:47:41 +0000
 
-Version: 7.0.5
+Version: 7.0.6
 Branch: HEAD
 Build: C:\php-sdk\php70dev\vc14\x86\obj\Release
 
@@ -242,9 +242,9 @@ Module: php_interbase.dll
 
 Module: php_intl.dll
 ===========================
-	icuuc56.dll
-	icuin56.dll
-	icuio56.dll
+	icuuc57.dll
+	icuin57.dll
+	icuio57.dll
 	msvcp140.dll
 	vcruntime140.dll
 	api-ms-win-crt-heap-l1-1-0.dll
