@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Arcanist"
-#define MyAppVersion "1.7.0"
+#define MyAppVersion "1.8.0"
 #define MyAppPublisher "By a user"
 #define MyAppURL "https://secure.phabricator.com/book/phabricator/article/arcanist_quick_start/"
 
@@ -33,8 +33,8 @@ Name: "custom"; Description: "Custom installation"; Flags: iscustom
 
 [Components]
 Name: "program"; Description: "Program Files"; Types: full custom; Flags: fixed
-Name: "php_x64"; Description: "PHP 7.0.13 x64 files"; Types: custom; Check: IsWin64
-Name: "php_x86"; Description: "PHP 7.0.13 x86 files"; Types: custom; Check: "not IsWin64"
+Name: "php_x64"; Description: "PHP 7.1.0 x64 files"; Types: custom; Check: IsWin64
+Name: "php_x86"; Description: "PHP 7.1.0 x86 files"; Types: custom; Check: "not IsWin64"
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
