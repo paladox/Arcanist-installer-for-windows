@@ -103,9 +103,9 @@ procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
 begin
   if CurUninstallStep = usUninstall then
   begin
-    RemovePath(ExpandConstant('{app}\arcanist\bin\'));
-    RemovePath(ExpandConstant('{app}\php\x64\'));
-    RemovePath(ExpandConstant('{app}\php\x86\'));
+    RemovePath(ExpandConstant('{app}\arcanist\bin'));
+    RemovePath(ExpandConstant('{app}\php\x64'));
+    RemovePath(ExpandConstant('{app}\php\x86'));
   end;
 end;
 
