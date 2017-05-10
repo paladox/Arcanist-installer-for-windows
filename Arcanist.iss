@@ -40,9 +40,9 @@ Name: "php_x86"; Description: "PHP 7.1.3 x86 files"; Types: custom; Check: "not 
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
-Source: "Arcanist\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: program
-Source: "php\x64\*"; DestDir: "{app}\php\x64"; Flags: ignoreversion recursesubdirs createallsubdirs; Check: IsWin64; Components: php_x64
-Source: "php\x86\*"; DestDir: "{app}\php\x86"; Flags: ignoreversion recursesubdirs createallsubdirs; Check: "not IsWin64"; Components: php_x86
+Source: "Arcanist\*"; DestDir: "{app}\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: program
+Source: "php\x64\*"; DestDir: "{app}\php\x64\"; Flags: ignoreversion recursesubdirs createallsubdirs; Check: IsWin64; Components: php_x64
+Source: "php\x86\*"; DestDir: "{app}\php\x86\"; Flags: ignoreversion recursesubdirs createallsubdirs; Check: "not IsWin64"; Components: php_x86
 Source: "vc_2015\vc_redist.x64.exe"; DestDir: {tmp}; Flags: deleteafterinstall; Check: IsWin64; Components: php_x64
 Source: "vc_2015\vc_redist.x86.exe"; DestDir: {tmp}; Flags: deleteafterinstall; Check: not IsWin64; Components: php_x86
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
