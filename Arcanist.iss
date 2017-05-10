@@ -55,9 +55,9 @@ Filename: "{tmp}\vc_redist.x86.exe"; Check: not IsWin64 and not VCinstalled; Com
 
 [Registry]
 ; set PATH
-Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType:string; ValueName:"Path"; ValueData:"{olddata};{app}\arcanist\bin"
-Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType:string; ValueName:"Path"; ValueData:"{olddata};{app}\php\x64"; Check: IsWin64; Components: php_x64
-Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType:string; ValueName:"Path"; ValueData:"{olddata};{app}\php\x86"; Check: "not IsWin64"; Components: php_x86
+Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType:string; ValueName:"Path"; ValueData:"{olddata};{app}\arcanist\bin\"
+Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType:string; ValueName:"Path"; ValueData:"{olddata};{app}\php\x64\"; Check: IsWin64; Components: php_x64
+Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType:string; ValueName:"Path"; ValueData:"{olddata};{app}\php\x86\"; Check: "not IsWin64"; Components: php_x86
 
 [Code]
 
