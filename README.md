@@ -14,24 +14,23 @@
     + Git CLI will be used to clone this repo and pull down the submodules (libphutil and arcanist) prior to installation
 
 ## Arcanist Installation Instructions
-  1) Use git to clone this repository into a folder of your choice.
+  1. Use git to clone this repository into a folder of your choice.
 ```sh
 $ git clone https://github.com/paladox/Arcanist-installer-for-windows.git
 ```
-  2) Inside of the repository folder, run the following git commands
+  2. Inside of the repository folder, run the following git commands
  ```sh
 $ git submodule
 $ git submodule update --init
 ```
-  3) Run Inno Setup Compiler (see Dependencies)
-  4) Use Inno to load the Arcanist.iss file inside of the repo folder
-  5) Run the script to start the installation process
-    a. You can also compile the setup.exe file, which will save to the /out folder of the repo
-  6) Install by navigating the installation wizard
-    a. Be sure to install PHP if you don't have it already
-  7) Reboot (for good measure)
-  8) From a terminal type ```arc help``` to see if arc command is recognized and the arcanist help menu is displayed
-    a. If you installed PHP, type ```php -v``` to see if php is recognized and the version is displayed
+  3. Run Inno Setup Compiler (see Dependencies)
+  4. Use Inno to load the Arcanist.iss file inside of the repo folder
+  5. Run the script to start the installation process
+    | *You can also compile the setup.exe file, which will save to the /out folder of the repo*
+  6. Install by navigating the installation wizard (Be sure to install PHP if you don't have it already)
+  7. Reboot (for good measure)
+  8. From a terminal type ```arc help``` to see if arc command is recognized and the arcanist help menu is displayed
+    | *also ```php -v``` if you installed PHP*
 
 ## Troubleshooting Installation
   + In your windows environment variables, make sure your PATH system variable has paths to arcanist and php
