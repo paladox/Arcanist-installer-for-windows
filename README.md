@@ -1,4 +1,3 @@
-
 # Arcanist installer for windows
 > **Arcanist make file to be used with Inno Setup Compiler to roll out your own Arcanist installer .exe**
 
