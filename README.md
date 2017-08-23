@@ -1,9 +1,9 @@
 
 # Arcanist installer for windows
-> **Arcanist make file to be used with Inno Setup Compiler**
+> **Arcanist make file to be used with Inno Setup Compiler to roll out your own Arcanist installer .exe**
 
 ## Configuring default text editor
-To configure the text editor that arcanist will use with commands like arc diff, please follow the instructions at https://secure.phabricator.com/book/phabricator/article/arcanist_windows/#configuring-an-editor
+To configure the text editor that Arcanist will use with commands like arc diff, please follow the instructions at https://secure.phabricator.com/book/phabricator/article/arcanist_windows/#configuring-an-editor
 
 ## Dependencies
 + Inno Setup Compiler
@@ -24,13 +24,14 @@ $ git submodule
 $ git submodule update --init
 ```
 3. Run Inno Setup Compiler (see Dependencies)
-4. Use Inno to load the Arcanist.iss file inside of the repo folder
+4. Use Inno to load the ```Arcanist.iss``` file inside of the repo folder
 5. Run the script to start the installation process
     * *You can also compile the ```setup.exe``` file, which will save to the ```/out``` folder of the repo*
-6. Install by navigating the installation wizard (Be sure to install PHP if you don't have it already)
+6. Install by navigating the installation wizard
+    * *Be sure to install PHP if you don't have it already*
 7. Reboot (for good measure)
-8. From a terminal type ```arc help``` to see if arc command is recognized and the arcanist help menu is displayed
-    * *also ```php -v``` to make sure php is working*
+8. From a terminal type ```arc help``` to see if arc command is recognized and the Arcanist help menu is displayed
+    * *also* ```php -v``` *to make sure PHP is working*
 
 ## Troubleshooting Installation
 + In your windows environment variables, make sure your PATH system variable has paths to arcanist and php
@@ -39,8 +40,10 @@ $ git submodule update --init
 
 
 ## Notes
-If you are using Cygwin on windows without having installed php for cygwin, the arc command will not work correctly.  It tries to call php on a filepath which is cygwin-specific i.e. /c/Users/myname/Documents instead of C:/Users/myname/Documents
-Therefore, you will have to add an alias to your cygwin bash profile
+If you are using Cygwin on windows without having installed php for cygwin, the arc command will not work correctly.  It tries to call php on a filepath which is cygwin-specific i.e. ```/c/path/to/Arcanist``` instead of ```C:/path/to/Arcanist...```
+
+Therefore, you will have to add an alias to your cygwin .bashrc or .bash_aliases:
+
 ```sh
 alias arc='php C:/path/to/Arcanist/arcanist/scripts/arcanist.php'
 ```
